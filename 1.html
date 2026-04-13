@@ -398,18 +398,34 @@ p[style*="text-align:left"] {
   box-sizing: border-box;
 }
 
-/* 自动化日期标签 */
+/* 适配移动端的纯胶囊副标题 */
+p[style*="text-align:left"] {
+  /* 基础定位：强制居中 */
+  display: block !important;
+  max-width: min(92vw, 700px);      /* 移动端占用 92% 宽度，留出边缘呼吸感 */
+  margin: 15px auto 25px !important; 
+  
+  /* 胶囊外观：移除蓝条，使用浅色背景 */
+  background: #f1f3f5;
+  border-radius: 50px;              /* 圆角胶囊 */
+  border: none !important;          /* 确保移除蓝色竖条 */
+  
+  /* 呼吸空间：解决挤压问题 */
+  padding: 12px 24px !important;    /* 增加左右内边距，文字不贴边 */
+  height: auto !important;          /* 高度自适应文字行数 */
+  
+  /* 文字样式：提升阅读体验 */
+  font-size: 15px !important;       /* 适合移动端的字号 */
+  color: #555 !important;
+  line-height: 1.5 !important;      /* 适中的行高 */
+  text-align: center !important;    /* 【关键】文字在胶囊内居中，更协调 */
+  word-wrap: break-word;            /* 自动换行 */
+  box-sizing: border-box;
+}
+
+/* 移除之前可能添加的日期伪元素（如果有） */
 p[style*="text-align:left"]::after {
-  content: attr(data-date);
-  font-size: 12px;
-  color: #888;
-  background: #fff;
-  padding: 2px 10px;
-  border-radius: 999px;
-  margin-left: 12px;
-  flex-shrink: 0;                   /* 【关键】防止日期在空间不足时被挤压变形 */
-  align-self: flex-start;           /* 多行时日期对齐到顶部，或用 center 对齐居中 */
-  margin-top: 2px;
+  content: none !important;
 }
 </style>
 </head>
@@ -543,17 +559,6 @@ p[style*="text-align:left"]::after {
 </div>
 
 <script>
-  // 自动获取当前日期并注入副标题
-const subHeader = document.querySelector('p[style*="text-align:left"]');
-if (subHeader) {
-    const today = new Date();
-    const yyyy = today.getFullYear();
-    const mm = String(today.getMonth() + 1).padStart(2, '0');
-    const dd = String(today.getDate()).padStart(2, '0');
-    
-    // 将格式化后的日期存入属性，供 CSS 读取
-    subHeader.setAttribute('data-date', `${yyyy}-${mm}-${dd}`);
-}
 document.addEventListener("DOMContentLoaded", function() {
     if ('IntersectionObserver' in window) {
         const imageObserver = new IntersectionObserver((entries, observer) => {
