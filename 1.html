@@ -372,16 +372,44 @@ p[style*="text-align:left"] {
   box-sizing: border-box;
 }
 
+/* 适配移动端的胶囊样式 */
+p[style*="text-align:left"] {
+  display: flex !important;
+  justify-content: space-between;
+  align-items: center;
+  
+  /* 形状与适配 */
+  max-width: min(95vw, 700px);      /* 稍微增加移动端宽度利用率 */
+  min-height: 44px;                 /* 设定最小高度，确保视觉一致性 */
+  height: auto !important;          /* 【关键】允许高度根据文字换行自动撑开 */
+  margin: 15px auto 20px !important;
+  padding: 10px 20px !important;    /* 使用上下内边距代替固定高度，防止挤压 */
+  
+  /* 外观 */
+  background: #f1f3f5;
+  border-radius: 24px;              /* 移动端建议使用固定大圆角而非 999px，换行时更美观 */
+  border: none !important;          /* 确保无蓝条 */
+  
+  /* 文字控制 */
+  font-size: 15px !important;       /* 稍微调大字体，提升移动端可读性 */
+  color: #444 !important;
+  line-height: 1.4 !important;      /* 增加行高，防止多行文字重叠 */
+  word-break: break-all;            /* 强制长字符换行，防止撑破胶囊 */
+  box-sizing: border-box;
+}
+
 /* 自动化日期标签 */
 p[style*="text-align:left"]::after {
-  content: attr(data-date);         /* 通过 JS 动态注入日期 */
+  content: attr(data-date);
   font-size: 12px;
   color: #888;
-  background: #fff;                 /* 日期背景设为纯白，形成对比 */
+  background: #fff;
   padding: 2px 10px;
   border-radius: 999px;
-  margin-left: 10px;
-  white-space: nowrap;
+  margin-left: 12px;
+  flex-shrink: 0;                   /* 【关键】防止日期在空间不足时被挤压变形 */
+  align-self: flex-start;           /* 多行时日期对齐到顶部，或用 center 对齐居中 */
+  margin-top: 2px;
 }
 </style>
 </head>
