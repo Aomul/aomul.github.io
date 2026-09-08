@@ -58,12 +58,23 @@
             height: 42px;
             border-radius: 50%;
             border: none;
-            /* 清新绿色播放按钮 */
             background: #42b983;
             color: #fff;
-            font-size: 18px;
+            font-size: 16px;
             cursor: pointer;
             flex-shrink: 0;
+            /* 简约高级优化：过渡动画 + hover效果 */
+            transition: all 0.2s ease;
+            display:flex;
+            align-items:center;
+            justify-content:center;
+        }
+        .play-btn:hover {
+            background: #38a474;
+            transform: scale(1.05);
+        }
+        .play-btn:active {
+            transform: scale(0.96);
         }
         .info-group {
             display: flex;
